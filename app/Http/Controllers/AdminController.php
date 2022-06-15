@@ -56,6 +56,7 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         if (Auth::user()->level === "admin") {
             if (User::where('username', $request->username)->exists()) {
                 return redirect()->back()->withErrors(['errors' => 'Username ' . $request->username . ' sudah ada !!']);
