@@ -50,26 +50,26 @@ class HomeController extends Controller
 
         //chart
         //pie chart
-        $detail = DetailOrder::join('users', 'users.id', '=', 'detail_order.id_user')
-            ->join('cabang', 'cabang.id', '=', 'users.id_cabang')
-            ->selectRaw('*,sum(harga_akhir) as total')
-            ->whereYear('detail_order.created_at', date('Y'))
-            ->groupBy('id_user')->get('id_user', 'total');
-        if (!$detail->isEmpty()) {
-            $detail->groupBy('users.id_cabang');
-        }
-        foreach ($detail as $details) {
-            foreach ($details as $det) {
-                $jumlah[] = $det->total;
-                $alamat[] = $det->alamat_cabang;
-            }
-        }
+        // $detail = DetailOrder::join('users', 'users.id', '=', 'detail_order.id_user')
+        //     ->join('cabang', 'cabang.id', '=', 'users.id_cabang')
+        //     ->selectRaw('*,sum(harga_akhir) as total')
+        //     ->whereYear('detail_order.created_at', date('Y'))
+        //     ->groupBy('id_user')->get('id_user', 'total');
+        // if (!$detail->isEmpty()) {
+        //     $detail->groupBy('users.id_cabang');
+        // }
+        // foreach ($detail as $details) {
+        //     foreach ($details as $det) {
+        //         $jumlah[] = $det->total;
+        //         $alamat[] = $det->alamat_cabang;
+        //     }
+        // }
 
-        if (!empty($alamat)) {
-            $pie = array_combine($alamat, $jumlah);
-        } else {
-            $pie = [];
-        }
+        // if (!empty($alamat)) {
+        //     $pie = array_combine($alamat, $jumlah);
+        // } else {
+        //     $pie = [];
+        // }
 
         //bar chart
         if (Auth::user()->level == 'admin') {
