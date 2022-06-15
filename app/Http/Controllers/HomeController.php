@@ -54,15 +54,17 @@ class HomeController extends Controller
             ->join('cabang', 'cabang.id', '=', 'users.id_cabang')
             ->selectRaw('*,sum(harga_akhir) as total')
             ->whereYear('detail_order.created_at', date('Y'))
-            ->groupBy('id_user')->get('id_user', 'total')->groupBy('users.id_cabang');
+            ->groupBy('id_user')->get('id_user', 'total');
         if (!$detail->isEmpty()) {
-            foreach ($detail as $details) {
-                foreach ($details as $det) {
-                    $jumlah[] = $det->total;
-                    $alamat[] = $det->alamat_cabang;
-                }
+            $detail->groupBy('users.id_cabang');
+        }
+        foreach ($detail as $details) {
+            foreach ($details as $det) {
+                $jumlah[] = $det->total;
+                $alamat[] = $det->alamat_cabang;
             }
         }
+
         if (!empty($alamat)) {
             $pie = array_combine($alamat, $jumlah);
         } else {
