@@ -277,14 +277,6 @@ class PelayananController extends Controller
             Transaksi::where('id', $value->id)->delete();
         }
         return redirect()->route('invoice', $order->id)->with('success', 'Data Laundry Berhasil Ditambah');
-        // $data = DetailOrder::where('id_order', $order->id)->get();
-        // $order = DetailOrder::where('id_order', $order->id)
-        //     ->selectRaw('*,SUM(harga_akhir) as total_bayar')
-        //     ->groupBy('id_order')
-        //     ->first();
-        // return view('karyawan.laporan.invoice', compact('data', 'order'));
-        // $details = DetailOrder::where('id_order', $order->id)->first();
-        // return $this->cetakinvoice($details->id_order);
     }
 
     public function destroy($id)
@@ -534,24 +526,12 @@ Terima kasih, *King Laundry*',
 
     public function invoicekar(Request $request)
     {
-        // if (Auth::user()->auth == "Karyawan") {
-        // $invoice = Transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.hari,transaksis.harga,transaksis.disc,transaksis.id_karyawan,transaksis.harga_akhir,a.jenis')
-        // ->leftJoin('hargas as a' , 'a.id' , '=' ,'transaksis.id_jenis')
-        // ->where('transaksis.id', $request->id)
-        // ->where('transaksis.id_karyawan',auth::user()->id)
-        // ->orderBy('id','DESC')->get();
 
         $data = DetailOrder::where('id_order', $request->id)->get();
         $order = DetailOrder::where('id_order', $request->id)
             ->selectRaw('*,SUM(harga_akhir) as total_bayar')
             ->groupBy('id_order')
             ->first();
-        //     $data = transaksi::selectRaw('transaksis.id,transaksis.id_customer,transaksis.id_karyawan,transaksis.tgl_transaksi,transaksis.tgl_ambil,transaksis.customer,transaksis.status_order,transaksis.status_payment,transaksis.id_jenis,transaksis.kg,transaksis.tgl_ambil,transaksis.disc,transaksis.invoice,transaksis.id_karyawan,transaksis.harga_akhir,a.nama,a.alamat,a.no_telp,a.kelamin,b.name,b.nama_cabang,b.alamat_cabang,b.no_telp as no_telpc')
-        //     ->leftJoin('customers as a' , 'a.id_customer' , '=' ,'transaksis.id_customer')
-        //     ->leftJoin('users as b' , 'b.id' , '=' ,'transaksis.id_karyawan')
-        //     ->where('transaksis.id', $request->id)
-        //     ->where('transaksis.id_karyawan',auth::user()->id)
-        //     ->orderBy('id','DESC')->first();
 
         return view('karyawan.laporan.invoice', compact('data', 'order'));
         // } else {'
@@ -573,51 +553,6 @@ Terima kasih, *King Laundry*',
         $filename = $order->order->invoice . '.png';
         $file = $location . $filename;
         file_put_contents($file, $image_base64);
-
-        // // $print = [
-        //     'data' => $data,
-        //     'order' => $order
-        // ];
-        // $pdf = PDF::loadView('karyawan.laporan.cetak', ['data' => $data], ['order' => $order]);
-        // $path = public_path('pdf/');
-        // $fileName =  $order->id_order . '.' . 'pdf';
-        // $pdf->save($path . '/' . $fileName);
-
-        // $newname = time() . '.' . explode('/', explode(':', substr($base64, 0, strpos($base64, ';')))[1])[1];
-        // Image::make($request->img)->save(public_path('storage/uploads/treatment/') . $newname);
-        // $path_node = realpath('C:\\Program Files\\nodejs\\node.exe');
-        // $path_npm = realpath('C:\Users\LENOVO\AppData\Roaming\npm');
-        // $path = 'public/invoices/';
-        // $fileName =  $order->order->invoice . '.jpg';
-        // $img = Screenshot::loadView('karyawan.laporan.cetak', ['data' => $data], ['order' => $order])
-        //     ->noSandbox()
-        //     ->setNpmBinary($path_npm)
-        //     ->setNodeBinary('PATH %~dp0;%PATH%;')
-        //     //dd($img);
-        //     ->save($path . $fileName);
-        // Browsershot::url('https://www.youtube.com/watch?v=NSJmvRwwo-0')
-        //     ->setNodeBinary('PATH %~dp0;%PATH%;')
-        //     ->setNpmBinary($path_npm)
-        //     ->setNodeModulePath('E:\\Laravel\\SkripShit\\king-laundry\\node_modules')
-        //     ->setChromePath('C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe')
-        //     ->save($path . $fileName);
-        // //$img->saveImage($path . '/' . $fileName);
-        // $pdf = new \Spatie\PdfToImage\Pdf($path . '/' . $fileName);
-        // $pdf->saveImage($path . '/' . $fileName);
-        //$opts = array('http' => array('header' => "User-Agent:MyAgent/1.0\r\n"));
-        //Basically adding headers to the request
-        //$context = stream_context_create($opts);
-        //$contents = file_get_contents($url);
-        //dd($contents);
-
-        //Storage::put($name, $contents);
-        //dd($img);
-        //Storage::put($path . '/' . $fileName, $img);
-
-        //Storage::disk('local')->put($path . '/' . $fileName, $img);
-        //$img->save($path . '/' . $fileName);
-        //return view('karyawan.laporan.cetak', compact('data', 'order'));
-
     }
     public function print($id)
     {
