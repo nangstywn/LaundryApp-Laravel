@@ -197,104 +197,100 @@
 
 <script>
 var cek = '{{Auth::user()->level}}';
-if (cek == 'admin') {
-    var pieChart = document.getElementById('pieChart').getContext('2d');
-    let cabang = @json($pie);
-    var myPieChart = new Chart(pieChart, {
-        type: 'pie',
-        data: {
-            datasets: [{
-                // data: [350, 500, 100],
-                data: Object.values(cabang),
-                backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b", "#FFF000", "#f2028e"],
-                borderWidth: 0
-            }],
-            labels: Object.keys(cabang)
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                position: 'bottom',
-                labels: {
-                    fontColor: 'rgb(154, 154, 154)',
-                    fontSize: 11,
-                    usePointStyle: true,
-                    padding: 20
-                }
-            },
-            pieceLabel: {
-                render: 'percentage',
-                fontColor: 'white',
-                fontSize: 14,
-            },
-            tooltips: false,
-            layout: {
-                padding: {
-                    left: 20,
-                    right: 20,
-                    top: 20,
-                    bottom: 20
-                }
-            }
-        }
-    });
-}
+// if (cek == 'admin') {
+//     var pieChart = document.getElementById('pieChart').getContext('2d');
+//     let cabang = @json($pie);
+//     var myPieChart = new Chart(pieChart, {
+//         type: 'pie',
+//         data: {
+//             datasets: [{
+//                 // data: [350, 500, 100],
+//                 data: Object.values(cabang),
+//                 backgroundColor: ["#1d7af3", "#f3545d", "#fdaf4b", "#FFF000", "#f2028e"],
+//                 borderWidth: 0
+//             }],
+//             labels: Object.keys(cabang)
+//         },
+//         options: {
+//             responsive: true,
+//             maintainAspectRatio: false,
+//             legend: {
+//                 position: 'bottom',
+//                 labels: {
+//                     fontColor: 'rgb(154, 154, 154)',
+//                     fontSize: 11,
+//                     usePointStyle: true,
+//                     padding: 20
+//                 }
+//             },
+//             pieceLabel: {
+//                 render: 'percentage',
+//                 fontColor: 'white',
+//                 fontSize: 14,
+//             },
+//             tooltips: false,
+//             layout: {
+//                 padding: {
+//                     left: 20,
+//                     right: 20,
+//                     top: 20,
+//                     bottom: 20
+//                 }
+//             }
+//         }
+//     });
+// }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
 <script>
-var barChart = document.getElementById('barChart').getContext('2d');
-let bulan = @json($bar);
-// const money = new Intl.NumberFormat('id-ID', {
-// style: 'currency',
-// currency: 'IDR'
+// var barChart = document.getElementById('barChart').getContext('2d');
+// let bulan = @json($bar);
+// var total = Object.values(bulan);
+// // const formatted = total.map(item => money.format(item));
+// // console.log(formatted);
+// var myBarChart = new Chart(barChart, {
+//     type: 'bar',
+//     data: {
+//         labels: Object.keys(bulan),
+//         datasets: [{
+//             label: "Pendapatan",
+//             backgroundColor: 'rgb(23, 125, 255)',
+//             borderColor: 'rgb(23, 125, 255)',
+//             data: total
+//         }],
+//     },
+//     options: {
+//         responsive: true,
+//         maintainAspectRatio: false,
+//         scales: {
+//             yAxes: [{
+//                 ticks: {
+//                     beginAtZero: true,
+//                 }
+//             }]
+//         },
+//         plugins: {
+//             tooltip: {
+//                 callbacks: {
+//                     label: function(context) {
+//                         let label = context.dataset.label || "";
+//                         if (label) {
+//                             label += ": ";
+//                         }
+//                         if (context.parsed.y !== null) {
+//                             label += new Intl.NumberFormat("id-ID", {
+//                                 style: "currency",
+//                                 currency: "IDR"
+//                             }).format(context.parsed.y);
+//                         }
+//                         return label;
+//                         console.log(label);
+//                     }
+//                 }
+//             }
+//         }
+//     }
 // });
-var total = Object.values(bulan);
-// const formatted = total.map(item => money.format(item));
-// console.log(formatted);
-var myBarChart = new Chart(barChart, {
-    type: 'bar',
-    data: {
-        labels: Object.keys(bulan),
-        datasets: [{
-            label: "Pendapatan",
-            backgroundColor: 'rgb(23, 125, 255)',
-            borderColor: 'rgb(23, 125, 255)',
-            data: total
-        }],
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                }
-            }]
-        },
-        plugins: {
-            tooltip: {
-                callbacks: {
-                    label: function(context) {
-                        let label = context.dataset.label || "";
-                        if (label) {
-                            label += ": ";
-                        }
-                        if (context.parsed.y !== null) {
-                            label += new Intl.NumberFormat("id-ID", {
-                                style: "currency",
-                                currency: "IDR"
-                            }).format(context.parsed.y);
-                        }
-                        return label;
-                        console.log(label);
-                    }
-                }
-            }
-        }
-    }
-});
 
 
 var multipleLineChart = document.getElementById('multipleLineChart').getContext('2d');
