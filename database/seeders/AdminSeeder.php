@@ -20,7 +20,8 @@ class AdminSeeder extends Seeder
             'username' => 'admin',
             'status' => 'Aktif',
             'level' => 'admin',
-            'password' => bcrypt('admin123')
+            'password' => bcrypt('admin123'),
+            'id_cabang' => 0,
         ]);
     }
 }
