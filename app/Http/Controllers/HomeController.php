@@ -61,7 +61,11 @@ class HomeController extends Controller
                 $alamat[] = $det->alamat_cabang;
             }
         }
-        $pie = array_combine($alamat, $jumlah);
+        if (!empty($alamat)) {
+            $pie = array_combine($alamat, $jumlah);
+        } else {
+            $pie = [];
+        }
 
         //bar chart
         if (Auth::user()->level == 'admin') {
