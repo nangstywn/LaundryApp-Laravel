@@ -131,8 +131,8 @@ class HomeController extends Controller
             'kry_total',
             'eks',
             'eks_adm',
-            'pie',
-            'bar',
+            // 'pie',
+            // 'bar',
             'line',
         ));
     }
