@@ -213,7 +213,7 @@ class AdminController extends Controller
             $addharga->harga = $request->harga;
             $addharga->satuan = $request->satuan;
             $addharga->jumlah = 1; // satuan gram
-            $addharga->status = $request->status; //aktif
+            $addharga->status = 'aktif';
             $addharga->save();
 
             //alert()->success('Tambah Data Harga Berhasil');
