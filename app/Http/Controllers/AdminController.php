@@ -190,6 +190,7 @@ class AdminController extends Controller
     public function hargastore(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'id_cabang' => 'required|string',
             'jenis_cuci' => 'required|string',
             'jenis' => 'required|string',
             'layanan' => 'required|string',
@@ -202,10 +203,11 @@ class AdminController extends Controller
         //dd($request->all());
         if (Auth::user()->level == "admin") {
             //check harga yang sudah ada
-            if (Harga::where('jenis_cuci', $request->jenis_cuci)->where('jenis', $request->jenis)->where('layanan', $request->layanan)->exists()) {
+            if (Harga::where('jenis_cuci', $request->jenis_cuci)->where('jenis', $request->jenis)->where('layanan', $request->layanan)->where('id_cabang', $request->id_cabang)->exists()) {
                 return back()->withErrors(['error' => 'Gagal Ditambah, Data Sudah Ada. Jika ingin mengubah silahkan edit harga']);
             }
             $addharga = new harga();
+            $addharga->id_cabang = $request->id_cabang;
             $addharga->jenis_cuci = $request->jenis_cuci;
             $addharga->jenis = ucwords($request->jenis);
             $addharga->layanan = $request->layanan;
