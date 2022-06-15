@@ -195,7 +195,6 @@ class AdminController extends Controller
             'layanan' => 'required|string',
             'harga' => 'required|integer',
             'satuan' => 'required|string',
-            'status' => 'required|string'
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
