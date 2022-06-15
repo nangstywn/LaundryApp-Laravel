@@ -50,51 +50,51 @@ class HomeController extends Controller
 
         //chart
         //pie chart
-        // $detail = DetailOrder::join('users', 'users.id', '=', 'detail_order.id_user')
-        //     ->join('cabang', 'cabang.id', '=', 'users.id_cabang')
-        //     ->selectRaw('*,sum(harga_akhir) as total')
-        //     ->whereYear('detail_order.created_at', date('Y'))
-        //     ->groupBy('id_user')->get('id_user', 'total');
-        // if (!$detail->isEmpty()) {
-        //     $detail->groupBy('users.id_cabang');
-        // }
-        // foreach ($detail as $details) {
-        //     foreach ($details as $det) {
-        //         $jumlah[] = $det->total;
-        //         $alamat[] = $det->alamat_cabang;
-        //     }
-        // }
+        $detail = DetailOrder::join('users', 'users.id', '=', 'detail_order.id_user')
+            ->join('cabang', 'cabang.id', '=', 'users.id_cabang')
+            ->selectRaw('*,sum(harga_akhir) as total')
+            ->whereYear('detail_order.created_at', date('Y'))
+            ->groupBy('id_user')->get('id_user', 'total');
+        if (!$detail->isEmpty()) {
+            $detail->groupBy('users.id_cabang');
+        }
+        foreach ($detail as $details) {
+            foreach ($details as $det) {
+                $jumlah[] = $det->total;
+                $alamat[] = $det->alamat_cabang;
+            }
+        }
 
-        // if (!empty($alamat)) {
-        //     $pie = array_combine($alamat, $jumlah);
-        // } else {
-        //     $pie = [];
-        // }
+        if (!empty($alamat)) {
+            $pie = array_combine($alamat, $jumlah);
+        } else {
+            $pie = [];
+        }
 
         //bar chart
-        // if (Auth::user()->level == 'admin') {
-        //     $bulan = DetailOrder::selectRaw('*,sum(harga_akhir) as total')
-        //         ->selectRaw('DATE_FORMAT(created_at,"%m") as months')
-        //         ->selectRaw('DATE_FORMAT(created_at,"%b") as month')->whereYear('created_at', date('Y'))
-        //         ->groupBy('months')->orderBy('months', 'asc')->get('total');
-        // } else {
-        //     $bulan = DetailOrder::join('users', 'users.id', '=', 'detail_order.id_user')
-        //         ->join('cabang', 'cabang.id', '=', 'users.id_cabang')
-        //         ->selectRaw('sum(harga_akhir) as total')
-        //         ->selectRaw('DATE_FORMAT(detail_order.created_at,"%m") as months')
-        //         ->selectRaw('DATE_FORMAT(detail_order.created_at,"%b") as month')->whereYear('detail_order.created_at', date('Y'))
-        //         ->where('id_cabang', Auth::user()->id_cabang)
-        //         ->groupBy('months')->orderBy('months', 'asc')->get('total');
-        // }
-        // foreach ($bulan as $bulans) {
-        //     $name[] = $bulans->month;
-        //     $tot[] = $bulans->total;
-        // }
-        // if (!empty($name)) {
-        //     $bar = array_combine($name, $tot);
-        // } else {
-        //     $bar = [];
-        // }
+        if (Auth::user()->level == 'admin') {
+            $bulan = DetailOrder::selectRaw('*,sum(harga_akhir) as total')
+                ->selectRaw('DATE_FORMAT(created_at,"%m") as months')
+                ->selectRaw('DATE_FORMAT(created_at,"%b") as month')->whereYear('created_at', date('Y'))
+                ->groupBy('months')->orderBy('months', 'asc')->get('total');
+        } else {
+            $bulan = DetailOrder::join('users', 'users.id', '=', 'detail_order.id_user')
+                ->join('cabang', 'cabang.id', '=', 'users.id_cabang')
+                ->selectRaw('sum(harga_akhir) as total')
+                ->selectRaw('DATE_FORMAT(detail_order.created_at,"%m") as months')
+                ->selectRaw('DATE_FORMAT(detail_order.created_at,"%b") as month')->whereYear('detail_order.created_at', date('Y'))
+                ->where('id_cabang', Auth::user()->id_cabang)
+                ->groupBy('months')->orderBy('months', 'asc')->get('total');
+        }
+        foreach ($bulan as $bulans) {
+            $name[] = $bulans->month;
+            $tot[] = $bulans->total;
+        }
+        if (!empty($name)) {
+            $bar = array_combine($name, $tot);
+        } else {
+            $bar = [];
+        }
 
         //line chart
         if (Auth::user()->level == 'karyawan') {
@@ -131,8 +131,8 @@ class HomeController extends Controller
             'kry_total',
             'eks',
             'eks_adm',
-            // 'pie',
-            // 'bar',
+            'pie',
+            'bar',
             'line',
         ));
     }

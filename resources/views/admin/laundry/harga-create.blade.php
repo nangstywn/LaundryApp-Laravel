@@ -12,11 +12,10 @@
                 <div class=" modal-body">
                     <div class="form-body">
                         <div class="row">
-                            <div class="col-lg-4 col-xl-4 col-12">
+                            <!-- <div class="col-lg-4 col-xl-4 col-12">
                                 <div class="form-group">
                                     <label for="cabang">Cabang</label>
-                                    <select name="id_cabang" id="cabang" class="form-control"
-                                        value="{{old('id_cabang')}}">
+                                    <select name="id_cabang" id="cabang" class="form-control" value="{{old('id_cabang')}}">
                                         <option value="">
                                             Pilih Cabang
                                         </option>
@@ -25,7 +24,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-lg-4 col-xl-4 col-12">
                                 <div class="form-group">
                                     <label for="jenis_cuci">Jenis Cuci</label>
