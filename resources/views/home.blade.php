@@ -224,8 +224,9 @@ if (cek == 'admin') {
         }
     });
 }
-
-
+</script>
+<script script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+<script>
 var barChart = document.getElementById('barChart').getContext('2d');
 let bulan = @json($bar);
 var total = Object.values(bulan);
@@ -263,7 +264,7 @@ var myBarChart = new Chart(barChart, {
                         if (context.parsed.y !== null) {
                             label += new Intl.NumberFormat("id-ID", {
                                 style: "currency",
-                                currency: "IDR"
+                                currency: "IDR",
                             }).format(context.parsed.y);
                         }
                         return label;
@@ -275,9 +276,16 @@ var myBarChart = new Chart(barChart, {
     }
 });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script>
 var multipleLineChart = document.getElementById('multipleLineChart').getContext('2d');
+// var gradientStroke = multipleLineChart.createLinearGradient(500, 0, 100, 0);
+// gradientStroke.addColorStop(0, '#80b6f4');
+// gradientStroke.addColorStop(1, '#f49080');
+
+// var gradientFill = multipleLineChart.createLinearGradient(500, 0, 100, 0);
+// gradientFill.addColorStop(0, "rgba(128, 182, 244, 0.6)");
+// gradientFill.addColorStop(1, "rgba(244, 144, 128, 0.6)");
 var data = @json($line);
 var myMultipleLineChart = new Chart(multipleLineChart, {
     type: 'line',
@@ -285,6 +293,11 @@ var myMultipleLineChart = new Chart(multipleLineChart, {
         labels: Object.keys(data),
         datasets: [{
             label: 'Transaksi',
+            // borderColor: gradientStroke,
+            // pointBorderColor: gradientStroke,
+            // pointBackgroundColor: gradientStroke,
+            // pointHoverBackgroundColor: gradientStroke,
+            // pointHoverBorderColor: gradientStroke,
             borderColor: "#1d7af3",
             pointBorderColor: "#FFF",
             pointBackgroundColor: "#1d7af3",
@@ -292,7 +305,7 @@ var myMultipleLineChart = new Chart(multipleLineChart, {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 1,
             pointRadius: 4,
-            backgroundColor: 'transparent',
+            backgroundColor: 'rgba(63, 176, 236, 0.8)',
             fill: true,
             borderWidth: 2,
             data: Object.values(data)

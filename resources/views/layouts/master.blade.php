@@ -153,77 +153,20 @@
                                 <div class="ball"></div>
                             </label>
                         </div>
-                        <li class="nav-item dropdown hidden-caret">
-                            <a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-bell"></i>
-                                <span class="notification">4</span>
-                            </a>
-                            <ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
-                                <li>
-                                    <div class="dropdown-title">You have 4 new notification</div>
-                                </li>
-                                <li>
-                                    <div class="notif-scroll scrollbar-outer">
-                                        <div class="notif-center">
-                                            <a href="#">
-                                                <div class="notif-icon notif-primary"> <i class="fa fa-user-plus"></i>
-                                                </div>
-                                                <div class="notif-content">
-                                                    <span class="block">
-                                                        New user registered
-                                                    </span>
-                                                    <span class="time">5 minutes ago</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notif-icon notif-success"> <i class="fa fa-comment"></i>
-                                                </div>
-                                                <div class="notif-content">
-                                                    <span class="block">
-                                                        Rahmad commented on Admin
-                                                    </span>
-                                                    <span class="time">12 minutes ago</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notif-img">
-                                                    <img src="{{URL::asset('assets/img/profile2.jpg')}}"
-                                                        alt="Img Profile">
-                                                </div>
-                                                <div class="notif-content">
-                                                    <span class="block">
-                                                        Reza send messages to you
-                                                    </span>
-                                                    <span class="time">12 minutes ago</span>
-                                                </div>
-                                            </a>
-                                            <a href="#">
-                                                <div class="notif-icon notif-danger"> <i class="fa fa-heart"></i> </div>
-                                                <div class="notif-content">
-                                                    <span class="block">
-                                                        Farrah liked Admin
-                                                    </span>
-                                                    <span class="time">17 minutes ago</span>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a class="see-all" href="javascript:void(0);">See all notifications<i
-                                            class="fa fa-angle-right"></i> </a>
-                                </li>
-                            </ul>
-                        </li>
+
 
                         <li class="nav-item dropdown hidden-caret">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
                                 aria-expanded="false">
                                 <div class="avatar-sm">
                                     @if(empty(Auth::user()->foto))
-                                    <img src="{{URL::asset('assets/img/profile.jpg')}}" alt="..."
+                                    @if(Auth::user()->level=='admin')
+                                    <img src="{{URL::asset('images/admin.png')}}" alt="..."
                                         class="avatar-img rounded-circle">
+                                    @else
+                                    <img src="{{URL::asset('images/kry.jpg')}}" alt="..."
+                                        class="avatar-img rounded-circle">
+                                    @endif
                                     @else
                                     <img src="{{URL::asset('images/'.Auth::user()->foto)}}" alt="..."
                                         class="avatar-img rounded-circle">
@@ -236,9 +179,13 @@
                                         <div class="user-box">
                                             <div class="avatar-lg">
                                                 @if(empty(Auth::user()->foto))
-                                                <img src="{{URL::asset('assets/img/profile.jpg')}}" alt="image profile"
+                                                @if(Auth::user()->level=='admin')
+                                                <img src="{{URL::asset('images/admin.png')}}" alt="image profile"
                                                     class="avatar-img rounded">
-
+                                                @else
+                                                <img src="{{URL::asset('images/kry.jpg')}}" alt="image profile"
+                                                    class="avatar-img rounded">
+                                                @endif
                                             </div>
                                             @else
                                             <img src="{{URL::asset('images/'.Auth::user()->foto)}}" alt="image profile"
@@ -247,7 +194,8 @@
                                         @endif
                                         <div class="u-text">
                                             <h4>{{Auth::user()->name}}</h4>
-                                            <p class="text-muted">{{Auth::user()->email}}</p><a href="profile.html"
+                                            <p class="text-muted">{{Auth::user()->email}}</p><a
+                                                href="{{route('kry.show')}}"
                                                 class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                                         </div>
                                 </div>
@@ -255,11 +203,11 @@
                         <li>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{route('kry.show')}}">My Profile</a>
-                            <a class="dropdown-item" href="#">My Balance</a>
+                            <!-- <a class="dropdown-item" href="#">My Balance</a>
                             <a class="dropdown-item" href="#">Inbox</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Account Setting</a>
-                            <div class="dropdown-divider"></div>
+                            <div class="dropdown-divider"></div> -->
                             <a class="dropdown-item" href="{{url('logout')}}">Logout</a>
                         </li>
                 </div>
@@ -278,7 +226,11 @@
                 <div class="user">
                     <div class="avatar-sm float-left mr-2">
                         @if(empty(Auth::user()->foto))
-                        <img src="{{URL::asset('assets/img/profile.jpg')}}" alt="..." class="avatar-img rounded-circle">
+                        @if(Auth::user()->level=='admin')
+                        <img src="{{URL::asset('images/admin.png')}}" alt="..." class="avatar-img rounded-circle">
+                        @else
+                        <img src="{{URL::asset('images/kry.jpg')}}" alt="..." class="avatar-img rounded-circle">
+                        @endif
                         @else
                         <img src="{{URL::asset('images/'. Auth::user()->foto)}}" alt="..."
                             class="avatar-img rounded-circle">
@@ -309,7 +261,7 @@
                                         <span class="link-collapse">My Profile</span>
                                     </a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="#edit">
                                         <span class="link-collapse">Edit Profile</span>
                                     </a>
@@ -318,7 +270,7 @@
                                     <a href="#settings">
                                         <span class="link-collapse">Settings</span>
                                     </a>
-                                </li>
+                                </li> -->
                                 <li>
                                     <a href="{{url('logout')}}">
                                         <span class="link-collapse">Logout</span>
