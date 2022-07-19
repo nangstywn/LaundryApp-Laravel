@@ -82,7 +82,7 @@ function capture() {
             </button>
             @endsection
             @section('print')
-            <a href="{{url('print', $order->order->id)}}" target="_blank" class="btn btn-secondary">
+            <a href="{{url('print', $order->order->invoice)}}" target="_blank" class="btn btn-secondary">
                 <i class="fa fa-print"></i>
                 Print
             </a>

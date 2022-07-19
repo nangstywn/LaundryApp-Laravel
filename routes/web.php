@@ -49,8 +49,8 @@ Route::group(['middleware' => ['auth', 'ceklevel:admin']], function () {
 
 //Karyawan & Admin Akses
 Route::middleware('auth')->group(function () {
-    Route::get('invoice-kar/{id}', 'PelayananController@invoicekar')->name('invoice');
-    Route::get('print/{id}', 'PelayananController@print');
+    Route::get('invoice-kar/{invoice}', 'PelayananController@invoicekar')->name('invoice');
+    Route::get('print/{invoice}', 'PelayananController@print');
     Route::get('pelayanan', 'PelayananController@index')->name('pelayanan.index');
     Route::get('profile', 'AdminController@show')->name('kry.show');
     Route::put('kry/{id}', 'AdminController@update')->name('kry.update');

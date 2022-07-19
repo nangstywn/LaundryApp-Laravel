@@ -83,18 +83,18 @@ class PelayananController extends Controller
                     if (Auth::user()->level == 'karyawan') {
                         if ($data->order->status_order == "Selesai") {
                             $btn =  '<div class="btn-group"><a id="ambil" data-id-ambil="' . $data->id_order . '" class="btn btn-sm btn-dark" style="color:white"><i class="fas fa-dolly"></i> Diambil</a>';
-                            $btn  .= '<a id="invoice" data-id-invoice="' . $data->id_order . '" class="btn btn-sm btn-primary" style="color:white">
+                            $btn  .= '<a id="invoice" data-id-invoice="' . $data->order->invoice . '" class="btn btn-sm btn-primary" style="color:white">
                             <i class="fas fa-file-invoice "></i> Invoice</a></div>';
                             return $btn;
                         } elseif ($data->order->status_order == "Diproses") {
                             $btn =  '<div class="btn-group"><a id="selesai" data-id-selesai="' . $data->id_order . '"class="btn btn-sm btn-success" style="color:white"><i class="fas fa-check-circle "></i> Selesai</a>';
-                            $btn  .= '<a  id="invoice" data-id-invoice="' . $data->id_order . '" class="btn btn-sm btn-primary" style="color:white">
+                            $btn  .= '<a  id="invoice" data-id-invoice="' . $data->order->invoice . '" class="btn btn-sm btn-primary" style="color:white">
                             <i class="fas fa-file-invoice "></i> Invoice</a>';
                             $btn  .= '<a id="delete" data-id-delete="' . $data->id_order . '" class="btn btn-sm btn-danger" style="color:white">
                                 <i class="fa fa-trash "></i></a></div>';
                             return $btn;
                         } else {
-                            $btn  = '<a id="invoice" data-id-invoice="' . $data->id_order . '" class="btn btn-sm btn-primary" style="color:white">
+                            $btn  = '<a id="invoice" data-id-invoice="' . $data->order->invoice . '" class="btn btn-sm btn-primary" style="color:white">
                                 <i class="fas fa-file-invoice "></i> Invoice</a>';
                             return $btn;
                         }
@@ -276,7 +276,7 @@ class PelayananController extends Controller
             $detail = DetailOrder::insert($detailOrder);
             Transaksi::where('id', $value->id)->delete();
         }
-        return redirect()->route('invoice', $order->id)->with('success', 'Data Laundry Berhasil Ditambah');
+        return redirect()->route('invoice', $order->invoice)->with('success', 'Data Laundry Berhasil Ditambah');
     }
 
     public function destroy($id)
@@ -524,11 +524,11 @@ Terima kasih, *King Laundry*',
         }
     }
 
-    public function invoicekar(Request $request)
+    public function invoicekar($invoice)
     {
-
-        $data = DetailOrder::where('id_order', $request->id)->get();
-        $order = DetailOrder::where('id_order', $request->id)
+        $orde = Order::where('invoice', $invoice)->first();
+        $data = DetailOrder::where('id_order', $orde->id)->get();
+        $order = DetailOrder::where('id_order', $orde->id)
             ->selectRaw('*,SUM(harga_akhir) as total_bayar')
             ->groupBy('id_order')
             ->first();
@@ -554,11 +554,12 @@ Terima kasih, *King Laundry*',
         $file = $location . $filename;
         file_put_contents($file, $image_base64);
     }
-    public function print($id)
+    public function print($invoice)
     {
-        $data = DetailOrder::where('id_order', $id)->get();
-        $hitung = DetailOrder::where('id_order', $id)->count();
-        $order = DetailOrder::where('id_order', $id)
+        $inv = Order::where('invoice', $invoice)->first();
+        $data = DetailOrder::where('id_order', $inv->id)->get();
+        $hitung = DetailOrder::where('id_order', $inv->id)->count();
+        $order = DetailOrder::where('id_order', $inv->id)
             ->selectRaw('*,SUM(harga_akhir) as total_bayar')
             ->groupBy('id_order')
             ->first();

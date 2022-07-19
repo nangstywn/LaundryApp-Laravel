@@ -42,11 +42,19 @@ class HomeController extends Controller
         //Karyawan
         $kry_order = Order::orderBy('id', 'asc')->where('karyawan', Auth::user()->name)->get()->count();
         // $kry_customer = Customer::orderBy('id', 'asc')->where('id_cabang', Auth::user()->id_cabang)->get()->count();
-        $kry_customer = Customer::orderBy('id', 'asc')->whereHas('user', function ($q) {
-            $q->where('id_cabang', Auth::user()->id_cabang);
-        })->get()->count();
+        // $kry_customer = Customer::orderBy('id', 'asc')->whereHas('user', function ($q) {
+        //     $q->where('id_cabang', Auth::user()->id_cabang);
+        // })->get()->count();
         $eks = Order::where('karyawan', Auth::user()->name)->select('spotting', 'ongkir')->get();
         $kry_total = DetailOrder::orderBy('id', 'asc')->where('id_user', Auth::user()->id)->get('harga_akhir');
+        $proses = DetailOrder::join('order', 'order.id', '=', 'id_order')->join('users', 'users.id', '=', 'id_user')
+            ->where('order.status_order', 'Diproses')->where('users.id_cabang', Auth::user()->id_cabang)
+            ->groupBy('id_order')
+            ->get()->count();
+        $selesai = DetailOrder::join('order', 'order.id', '=', 'id_order')->join('users', 'users.id', '=', 'id_user')
+            ->where('order.status_order', 'Selesai')->where('users.id_cabang', Auth::user()->id_cabang)
+            ->groupBy('id_order')
+            ->get()->count();
 
         //chart
         //pie chart
@@ -128,13 +136,15 @@ class HomeController extends Controller
             'user',
             'total',
             'kry_order',
-            'kry_customer',
+            // 'kry_customer',
             'kry_total',
             'eks',
             'eks_adm',
             'pie',
             'bar',
             'line',
+            'proses',
+            'selesai',
         ));
     }
 }

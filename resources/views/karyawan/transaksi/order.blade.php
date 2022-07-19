@@ -163,12 +163,12 @@ $('#id_karyawan').on('change', function() {
 });
 // Tampilkan Invoice
 $(document).on('click', '#invoice', function() {
-    var id = $(this).attr('data-id-invoice');
+    var invoice = $(this).attr('data-id-invoice');
     $.ajax({
-        url: "/invoice-kar/" + id,
-        type: "GET",
+        type: 'GET',
+        url: "/invoice-kar/" + invoice,
         success: function(data) {
-            window.location.href = "/invoice-kar/" + id;
+            window.location.href = "/invoice-kar/" + invoice;
         }
     });
 });
