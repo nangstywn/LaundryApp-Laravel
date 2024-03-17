@@ -34,7 +34,8 @@
                                             <input id="inputUser" type="text" placeholder="Username" required=""
                                                 autofocus=""
                                                 class="form-control shadow-sm px-4 @error('username') is-invalid @enderror"
-                                                name="username">
+                                                name="username" oninvalid="this.setCustomValidity('Masukkan nama')"
+                                                oninput="this.setCustomValidity('')" />
                                             @error('username')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>

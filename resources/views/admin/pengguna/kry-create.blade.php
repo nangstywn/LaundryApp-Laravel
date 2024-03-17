@@ -104,7 +104,7 @@
                 </div>
                 <input type="hidden" name="level" value="karyawan">
                 <div class="modal-footer">
-                    <button type="submit" name="save" class="btn btn-success"> <i class="fa fa-btn fa-save text"></i>
+                    <button type="submit" name="save" class="btn btn-success"><i class="fa fa-btn fa-save text"></i>
                         Save
                     </button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
